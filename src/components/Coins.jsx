@@ -1,0 +1,79 @@
+import React from "react";
+import Wrapper from "./Wrapper";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+const Coins = () => {
+  const coinState = useSelector((state) => state.coin);
+  const getAllCoins = coinState.data.data?.coins;
+  const loading = coinState.isLoading;
+  console.log(getAllCoins);
+  return (
+    <div className="bg-[#1c1c1c] w-full min-h-[calc(45vh-70px)] h-auto">
+      <Wrapper>
+        <div className="w-full h-[100px] flex items-center justify-center md:justify-end pt-6 pb-6">
+          <input
+            placeholder="Search..."
+            className="border border-[gray] bg-transparent w-[90%] md:w-[35%] h-[45px] rounded-md pl-4 outline-none text-[lightgray]"
+          />
+        </div>
+        {loading ? (
+          <div className="w-full h-[calc(45vh-70px-100px)] flex items-center justify-center">
+            <p className="text-white">Loading...</p>
+          </div>
+        ) : (
+          <div className="w-full h-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4 pb-10">
+            {getAllCoins?.length > 0 &&
+              getAllCoins?.map((coin, index) => (
+                <div
+                  key={index}
+                  className="min-h-[220px] md:min-h-[250px] border-2 border-[gray] rounded-md py-3 px-2 md:py-6 md:px-4 drop-shadow-lg"
+                >
+                  <div className="w-[50px] h-[50px] md:w-[70px] md:h-[70px] m-auto">
+                    <img
+                      src={coin.iconUrl}
+                      className="w-[100%] h-[100%] object-cover"
+                    />
+                  </div>
+                  <div className="mt-4 h-[30px] bg-[#2c2929] rounded-md">
+                    <p className="h-[30px] text-[lightgray] text-center flex items-center justify-center text-sm">
+                      {coin.symbol}
+                    </p>
+                  </div>
+                  <div className=" mt-4 flex justify-between gap-3">
+                    <div className=" w-[50%] h-[60px] bg-[#2c2929] rounded-md flex items-center justify-center flex-col p-1">
+                      <span className="text-[lightgray] text-xs md:text-sm">
+                        Price
+                      </span>
+                      <span className="text-[gray] text-xs md:text-sm">
+                        {typeof parseFloat(coin.price) === "number"
+                          ? parseFloat(coin.price).toFixed(1)
+                          : "N/A"}
+                      </span>
+                    </div>
+                    <div className=" w-[50%] h-[60px] bg-[#2c2929] rounded-md flex items-center justify-center flex-col p-1">
+                      <span className="text-[lightgray] text-xs md:text-sm">
+                        Change
+                      </span>
+                      <span className="text-[gray] text-xs md:text-sm">
+                        {coin.change}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <Link to={`/coin/${coin.uuid}`}>
+                      <button className="w-[100%] py-2 bg-[#1DB954] rounded-md shadow-lg outline-none border-none uppercase text-xs md:text-sm">
+                        Details
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
+      </Wrapper>
+    </div>
+  );
+};
+
+export default Coins;

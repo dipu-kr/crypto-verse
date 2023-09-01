@@ -124,7 +124,7 @@ ul a li:hover:after {
     background-color: #1c1c1c;
     /* background-color: #010101; */
     padding: 20px 20px 0px 20px;
-    top: 0px;
+    top: 70px;
     right: 0;
     bottom: 0;
     text-align: center;
@@ -133,11 +133,16 @@ ul a li:hover:after {
     z-index: 9;
     /* opacity: 0.9; */
   }
+
   .openMenu a li {
+    width: 200px;
+    height: 40px;
     color: white;
     margin-bottom: 25px;
     text-align: center;
     cursor: pointer;
+    background-color: #333232;
+    padding: 8px;
   }
 
   .closeMenu {

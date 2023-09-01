@@ -6,6 +6,6 @@ body {
 
 .app {
   width: 100%;
-  height: auto;
-  /* background-color: #010101; */
+  position: relative;
+  overflow: hidden;
 }

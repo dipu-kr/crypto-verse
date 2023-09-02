@@ -3,7 +3,7 @@ import axiosInstance from "../../api";
 
 const options = {
   method: "GET",
-  url: "/exchanges",
+  url: "/coin/Qwsogvtv82FCd/exchanges",
   params: {
     referenceCurrencyUuid: "yhjMzLPhuIDl",
     limit: "50",
@@ -23,7 +23,7 @@ export const fetchExchange = createAsyncThunk("fetchExchange", async () => {
 });
 
 const exchangeSlice = createSlice({
-  name: "news",
+  name: "exchange",
   initialState: {
     isLoading: false,
     exchangeData: [],
@@ -35,7 +35,7 @@ const exchangeSlice = createSlice({
     });
     builder.addCase(fetchExchange.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.newsData = action.payload;
+      state.exchangeData = action.payload;
     });
     builder.addCase(fetchExchange.rejected, (state) => {
       state.isError = true;

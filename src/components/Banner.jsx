@@ -68,11 +68,11 @@ const Banner = () => {
                   {getAllCoins?.map((coin, index) => (
                     <div
                       key={index}
-                      className="md:max-w-[130px} md:min-w-[130px] md:h-[130px] min-w-[100px] max-w-[100px] h-[100px] rounded-md border-[0.5px] border-[#585555] flex items-center justify-center"
+                      className="md:max-w-[100px} md:min-w-[100px] md:h-[100px] min-w-[70px] max-w-[70px] h-[70px] rounded-md border-[0.5px] border-[#585555] flex items-center justify-center"
                     >
                       <img
                         src={coin.iconUrl}
-                        className="md:w-[100px] md:h-[100px] w-[75px] h-[75px] object-cover"
+                        className="md:w-[80px] md:h-[80px] w-[60px] h-[60px] object-cover"
                       />
                     </div>
                   ))}

@@ -18,7 +18,7 @@ const Exchnage = () => {
     <div className="bg-[#1c1c1c] w-full min-h-[calc(45vh-70px)] h-auto">
       <Wrapper>
         <div className="py-10">
-          <h5 className="text-white text-center text-xl md:text-2xl font-bold uppercase">
+          <h5 className="text-white text-center text-xl md:text-2xl font-bold uppercase underline underline-offset-8">
             EXCHANGES
           </h5>
         </div>

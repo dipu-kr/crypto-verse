@@ -1,18 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Wrapper from "./Wrapper";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { debouncedSearchCoin } from "../redux/slice/searchCoin";
+import { SearchOutlined } from "@ant-design/icons";
 
 const Coins = () => {
+  // const [allCoins, setAllCoins] = useState(getAllCoins);
+  // console.log(allCoins);
   const coinState = useSelector((state) => state.coin);
   const getAllCoins = coinState.data.data?.coins;
   const loading = coinState.isLoading;
-  console.log(getAllCoins);
+  // console.log(getAllCoins);
+
+  const [allCoins, setAllCoins] = useState(getAllCoins);
+  console.log(allCoins);
+  const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    // Dispatch the debounced action with the search query
+    debouncedSearchCoin(query, dispatch);
+  };
+
+  const searchState = useSelector((state) => state.search);
+  const getSearchValue = searchState.searchData.data?.coins;
+  // console.log(searchState.searchData.data?.coins);
+
+  // useEffect
+  useEffect(() => {
+    if (searchQuery.trim().length > 0) {
+      setAllCoins(getSearchValue);
+    }
+  }, [searchQuery]);
+
   return (
     <div className="bg-[#1c1c1c] w-full min-h-[calc(45vh-70px)] h-auto">
       <Wrapper>
         <div className="w-full h-[100px] flex items-center justify-center md:justify-end pt-6 pb-6">
           <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchInputChange}
             placeholder="Search..."
             className="border border-[gray] bg-transparent w-[90%] md:w-[35%] h-[45px] rounded-md pl-4 outline-none text-[lightgray]"
           />
@@ -23,8 +56,8 @@ const Coins = () => {
           </div>
         ) : (
           <div className="w-full h-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4 pb-10">
-            {getAllCoins?.length > 0 &&
-              getAllCoins?.map((coin, index) => (
+            {allCoins?.length > 0 &&
+              allCoins?.map((coin, index) => (
                 <div
                   key={index}
                   className="min-h-[220px] md:min-h-[250px] border-2 border-[gray] rounded-md py-3 px-2 md:py-6 md:px-4 drop-shadow-lg"

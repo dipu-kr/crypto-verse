@@ -1,9 +1,11 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Wrapper from "./Wrapper";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const Details = () => {
+  const navigate = useNavigate();
   const coinState = useSelector((state) => state.coin);
   const getAllCoins = coinState.data.data?.coins;
   const { id } = useParams();
@@ -13,6 +15,14 @@ const Details = () => {
     <div className="w-full min-h-[calc(45vh-70px)] h-auto bg-[#1c1c1c] pb-8">
       <Wrapper>
         <div>
+          <div className="inline-block">
+            <button
+              onClick={() => navigate("/")}
+              className="px-3 py-2 border-2 border-zinc-600 mt-4 text-white flex items-center justify-center text-xl rounded-md hover:bg-slate-600 transition-all duration-300 ease-in-out"
+            >
+              <ArrowLeftOutlined />
+            </button>
+          </div>
           <div className="py-6">
             <h5 className="text-white text-center text-xl md:text-2xl font-bold uppercase">
               Coin Details

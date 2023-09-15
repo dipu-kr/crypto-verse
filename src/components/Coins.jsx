@@ -18,6 +18,8 @@ const Coins = () => {
   console.log(allCoins);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchPerformed, setSearchPerformed] = useState(false);
+  const [hasSearchResults, setHasSearchResults] = useState(true);
 
   const handleSearchInputChange = (e) => {
     const query = e.target.value;
@@ -28,15 +30,22 @@ const Coins = () => {
   };
 
   const searchState = useSelector((state) => state.search);
+  console.log(searchState);
   const getSearchValue = searchState.searchData.data?.coins;
   // console.log(searchState.searchData.data?.coins);
 
   // useEffect
   useEffect(() => {
     if (searchQuery.trim().length > 0) {
+      setSearchPerformed(true); // User has performed a search
       setAllCoins(getSearchValue);
+      setHasSearchResults(getSearchValue && getSearchValue.length > 0);
+    } else {
+      setSearchPerformed(false); // User cleared the search
+      setAllCoins(getAllCoins);
+      setHasSearchResults(true); // Reset to default state
     }
-  }, [searchQuery]);
+  }, [searchQuery, getAllCoins, getSearchValue]);
 
   return (
     <div className="bg-[#1c1c1c] w-full min-h-[calc(45vh-70px)] h-auto">
@@ -56,7 +65,7 @@ const Coins = () => {
           </div>
         ) : (
           <div className="w-full h-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4 pb-10">
-            {allCoins?.length > 0 &&
+            {hasSearchResults && allCoins?.length > 0 ? (
               allCoins?.map((coin, index) => (
                 <div
                   key={index}
@@ -101,7 +110,12 @@ const Coins = () => {
                     </Link>
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="w-full text-white text-center">
+                {searchPerformed ? "No results found" : "Loading..."}
+              </div>
+            )}
           </div>
         )}
       </Wrapper>

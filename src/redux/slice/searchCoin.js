@@ -2,38 +2,48 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../api";
 import debounce from "lodash/debounce";
 
-const options = {
-  method: "GET",
-  url: "/search-suggestions",
-  params: {
-    referenceCurrencyUuid: "yhjMzLPhuIDl",
-    searchQuery: "",
-  },
-};
+// const options = {
+//   method: "GET",
+//   url: `/search-suggestions?referenceCurrencyUuid=yhjMzLPhuIDl&searchQuery=${searchQuery}`,
+//   params: {
+//     referenceCurrencyUuid: "yhjMzLPhuIDl",
+//     searchQuery: "",
+//   },
+// };
 
-// export const searchCoin = createAsyncThunk("searchCoin", async () => {
-//   try {
-//     const response = await axiosInstance.request(options);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// });
+const BASE_URL = "https://coinranking1.p.rapidapi.com";
 
 export const searchCoin = createAsyncThunk(
   "searchCoin",
   async (searchQuery, thunkAPI) => {
     try {
       // Modify the options object to include the search query
-      const updatedOptions = {
-        ...options,
-        params: {
-          ...options.params,
-          searchQuery,
-        },
-      };
+      // const updatedOptions = {
+      //   ...options,
+      //   params: {
+      //     ...options.params,
+      //     searchQuery,
+      //   },
+      // };
 
-      const response = await axiosInstance.request(updatedOptions);
+      // const response = await axiosInstance.request(updatedOptions);
+      // return response.data;
+      // Construct the URL with the search query
+      const url = `${BASE_URL}/search-suggestions?referenceCurrencyUuid=yhjMzLPhuIDl&searchQuery=${searchQuery}`;
+
+      // Make the API request
+      const response = await axios.get(url, {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key":
+            "7e9449bcf9msh20e3088af44cf4dp1a72f2jsn171b68400c3a",
+          "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
+        },
+        params: {
+          referenceCurrencyUuid: "yhjMzLPhuIDl",
+        },
+      });
+
       return response.data;
     } catch (error) {
       throw error;
